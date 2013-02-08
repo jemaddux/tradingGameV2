@@ -212,32 +212,52 @@ class Game
     temparray = YAML::load tempfile
     $copper = temparray[0]
     x = temparray[1]
-    $wood[0] = temparray[2]
-    $wood[1] = temparray[3]
-    $wood[2] = temparray[4]
-    $wood[3] = temparray[5]
-    $meat[0] = temparray[6]
-    $meat[1] = temparray[7]
-    $meat[2] = temparray[8]
-    $meat[3] = temparray[9]
-    $fish[0] = temparray[10]
-    $fish[1] = temparray[11]
-    $fish[2] = temparray[12]
-    $fish[3] = temparray[13]
-    $wheat[0] = temparray[14]
-    $wheat[1] = temparray[15]
-    $wheat[2] = temparray[16]
-    $wheat[3] = temparray[17]
-    $bread[0] = temparray[18]
-    $bread[1] = temparray[19]
-    $bread[2] = temparray[20]
-    $bread[3] = temparray[21]
+    mini_load0(temparray)
   end 
+
+  def mini_load0(temparray)
+    mini_load1(temparray)
+    mini_load2(temparray)
+    mini_load3(temparray)
+    mini_load4(temparray)
+    mini_load5(temparray)
+  end
+
+  def mini_load1(temparray)
+    (0..3).each do |x|
+      $wood[x] = temparray[x+2]
+    end
+  end
+
+  def mini_load2(temparray)
+    (0..3).each do |y|
+      $meat[y] = temparray[y+6]
+    end
+  end
+
+  def mini_load3(temparray)
+    (0..3).each do |z|
+      $fish[z] = temparray[z+10]
+    end
+  end
+
+  def mini_load4(temparray)
+    (0..3).each do |a|
+      $wheat[a] = temparray[a+14]
+    end
+  end
+
+  def mini_load5(temparray)
+    (0..3).each do |b|
+      $bread[b] = temparray[b+18]
+    end
+  end
+
 end
 
 if __FILE__ == $0
 
-$game = Game.new
-$game.intiate
+game = Game.new
+game.intiate
 
 end
