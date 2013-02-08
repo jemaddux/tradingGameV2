@@ -4,29 +4,7 @@
 require 'yaml'
 $filename = "tradinggamev2save.txt"
 
-class Game
-  def intiate
-    puts "Welcome to the Trading Town!"
-    puts "Would you like to load your old game (Y/N)?"
-    loadit = gets.chomp.downcase
-    #Intial items and money settings.
-    if (loadit == "y")
-      puts "Loading your old game...."
-      $game.loadgame
-      puts "Done."
-      puts ""
-    else
-      puts "Starting a new game...."
-      puts ""
-      $wood = [0,"wood",2,2] #(quantity,name of object,buy price,sell price)
-      $copper = 20 
-      $meat = [0,"meat",7,5]
-      $fish = [0,"fish",4,3]
-      $wheat = [0,"wheat",2,2]
-      $bread = [0,"bread",6,5]
-    end
-  
-    #Intial place settings.
+#############################SPACE FOR HASHES AND ARRAYS##################################
     $market = 
       ["market",
       "Welcome to the market. Here you can buy and sell wood, meat, fish, wheat and bread.",
@@ -48,7 +26,36 @@ class Game
       $wheat, "wh",
       -1
       ]
-    $game.whereto
+
+
+#####################################END SPACE############################################
+
+class Game
+  def initialize
+
+  end
+
+  def intiate
+    puts "Welcome to the Trading Town!"
+    puts "Would you like to load your old game (Y/N)?"
+    loadit = gets.chomp.downcase
+    #Intial items and money settings.
+    if (loadit == "y")
+      puts "Loading your old game...."
+      loadgame()
+      puts "Done."
+      puts ""
+    else
+      puts "Starting a new game...."
+      puts ""
+      $wood = [0,"wood",2,2] #(quantity,name of object,buy price,sell price)
+      $copper = 20 
+      $meat = [0,"meat",7,5]
+      $fish = [0,"fish",4,3]
+      $wheat = [0,"wheat",2,2]
+      $bread = [0,"bread",6,5]
+    end
+    whereto
   end
 
   def whereto
@@ -56,12 +63,12 @@ class Game
     y = gets.chomp.to_s.downcase
     if (y == "h")
       puts ""
-      $game.place($harbor)
+      place($harbor)
     elsif (y == "m")
       puts ""
-      $game.place($market)
+      place($market)
     elsif (y == "esc")
-      $game.over
+      game_over
     elsif (y == "cheat")
       puts "You cheater."
       puts "What would you like to change?"
@@ -71,25 +78,25 @@ class Game
         puts "You have #{$copper} coppers."
         puts "How many coppers do you want?"
         $copper = gets.chomp.to_i
-        $game.whereto
+        whereto
       elsif (y == "w")
-        $game.cheat($wood)
-        $game.whereto
+        cheat($wood)
+        whereto
       elsif (y == "m")
-        $game.cheat($meat)
-        $game.whereto
+        cheat($meat)
+        whereto
       elsif (y == "f")
-        $game.cheat($fish)
-        $game.whereto
+        cheat($fish)
+        whereto
       elsif (y == "wh")
-        $game.cheat($wheat)
-        $game.whereto
+        cheat($wheat)
+        whereto
       elsif (y == "b")
-        $game.cheat($bread)
-        $game.whereto
+        cheat($bread)
+        whereto
       end
     else 
-      $game.whereto
+      whereto
     end
   end
 
@@ -102,7 +109,7 @@ class Game
        what = gets.chomp.downcase
       placearray.length.times do |x|
          if (what == placearray[x])
-        $game.buy(placearray[x-1],(placearray[placearray.length.-1]))
+        buy(placearray[x-1],(placearray[placearray.length.-1]))
          end
       end
     elsif (buyorsell == "s")
@@ -110,14 +117,14 @@ class Game
        what = gets.chomp.downcase
       placearray.length.times do |x|
          if (what == placearray[x])
-        $game.sell(placearray[x-1],(placearray[placearray.length.-1]))
+        sell(placearray[x-1],(placearray[placearray.length.-1]))
          end
       end    
     else
        puts "That isn't a valid input."
     end
     puts ""
-    $game.whereto
+    whereto
   end
 
   def cheat(temparray)
@@ -183,8 +190,8 @@ class Game
     end
   end
 
-  def over
-    $game.savegame
+  def game_over
+    savegame
     puts "Game Over!"
   end
     
